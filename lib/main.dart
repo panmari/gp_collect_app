@@ -38,17 +38,20 @@ class CovidDataState extends State<CovidData> {
         ),
         body: Column(
           children: [
-            Image(
-              image: AssetImage('images/test.jpg'),
-              fit: BoxFit.cover,
-              height: 340,
+            TextField(
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Enter a search term',
+              ),
+              onChanged: (text) {
+                print("First text field: ${text}");
+              },
             ),
             FutureBuilder<GPCollectData>(
               future: futureData,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return SizedBox(
-                      height: 600,
+                  return Expanded(
                       child: (ListView.builder(
                         itemCount: snapshot.data.runners.length,
                         itemBuilder: (context, index) {
@@ -88,8 +91,8 @@ class GPCollectData {
   factory GPCollectData.fromJson(Map<String, dynamic> json) {
     List<RunnerData> runners = json['data'].map<RunnerData>((data) {
       return RunnerData(
-          firstName: data["first_name"],
-          lastName: data["last_name"],
+        firstName: data["first_name"],
+        lastName: data["last_name"],
       );
     }).toList();
     return GPCollectData(
@@ -99,8 +102,9 @@ class GPCollectData {
 }
 
 Future<GPCollectData> fetchData() async {
-  final response =
-      await http.get('http://gpcollect.duckdns.org/de/runners.json?search%5Bvalue%5D=pizza');
+  final term = '';
+  final response = await http.get(
+      "http://gpcollect.duckdns.org/de/runners.json?search%5Bvalue%5D=${term}");
   if (response.statusCode == 200) {
     return GPCollectData.fromJson(json.decode(response.body));
   } else {
