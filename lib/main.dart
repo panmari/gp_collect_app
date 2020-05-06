@@ -13,6 +13,10 @@ class GPCollectMain extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       home: GPCollectDataWidget(),
+        routes: {
+    RunnerDetails.routeName: (context) => RunnerDetails(),
+  },
+
     );
   }
 }
@@ -53,9 +57,11 @@ class GPCollectDataState extends State<GPCollectDataWidget> {
         runner.fastestRunDuration,
       ),
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return RunnerDetails();
-        }));
+        Navigator.pushNamed(
+          context,
+          RunnerDetails.routeName,
+          arguments: runner,
+        );
       },
     );
   }
@@ -139,11 +145,16 @@ class GPCollectSearchResult {
 }
 
 class RunnerDetails extends StatelessWidget {
+  static const routeName = '/runner';
+
+
   Widget build(BuildContext context) {
+    final RunnerData args = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Text('Page 2'),
+        child: Text(args.firstName),
       ),
     );
   }
