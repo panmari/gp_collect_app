@@ -13,10 +13,9 @@ class GPCollectMain extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       home: GPCollectDataWidget(),
-        routes: {
-    RunnerDetails.routeName: (context) => RunnerDetails(),
-  },
-
+      routes: {
+        RunnerDetails.routeName: (context) => RunnerDetails(),
+      },
     );
   }
 }
@@ -29,7 +28,7 @@ class GPCollectDataWidget extends StatefulWidget {
 class GPCollectDataState extends State<GPCollectDataWidget> {
   Future<GPCollectSearchResult> _results;
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     _results = _fetchData('');
   }
