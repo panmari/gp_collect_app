@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' show json;
+import 'runner_data.dart';
+import 'runner_details.dart';
 
 void main() => runApp(GPCollectMain());
 
@@ -107,18 +109,6 @@ class GPCollectDataState extends State<GPCollectDataWidget> {
   }
 }
 
-class RunnerData {
-  final String firstName;
-  final String lastName;
-  final String clubOrHometown;
-  final String fastestRunDuration;
-  RunnerData(
-      {this.firstName,
-      this.lastName,
-      this.clubOrHometown,
-      this.fastestRunDuration});
-}
-
 class GPCollectSearchResult {
   final List<RunnerData> runners;
   final int recordsTotal;
@@ -143,30 +133,3 @@ class GPCollectSearchResult {
   }
 }
 
-class RunnerDetails extends StatelessWidget {
-  static const routeName = '/runner';
-
-  Widget build(BuildContext context) {
-    final RunnerData args = ModalRoute.of(context).settings.arguments;
-
-    return Scaffold(
-      appBar: AppBar(),
-      body: Container(
-        decoration: BoxDecoration(
-          border: Border.all(width: 10, color: Colors.black38),
-          borderRadius: const BorderRadius.all(const Radius.circular(8)),
-        ),
-        margin: const EdgeInsets.all(50),
-        child: Center(
-          child: Column(
-            children: [
-              Row(children: [Text(args.firstName + " " + args.lastName)]),
-              Row(children: [Text(args.clubOrHometown)]),
-              Row(children: [Text(args.fastestRunDuration)]),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
